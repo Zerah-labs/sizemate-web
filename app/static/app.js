@@ -35,36 +35,44 @@ const modeData = {
     action:'Create my PDF',note:'Every photo becomes its own page. Arrange them in your preferred order.'}
 };
 const ta = {
-  navHow:'எப்படி வேலை செய்கிறது',eyebrow:'உங்கள் கோப்புகளுக்கான எளிய உதவி',
-  headline:'பெரிய ஃபைலா? <span>சின்ன பிரச்சனை.</span>',
-  subtitle:'போட்டோ, PDF அளவை குறைக்கவும்; வீடியோவை MP3 ஆக மாற்றவும் — சில கிளிக்குகளில்.',
-  perk1:'பதிவு தேவையில்லை',perk2:'ஃபைல்கள் சேமிக்கப்படாது',perk3:'எளிய பதிவிறக்கம்',
-  selectAction:'உங்களுக்கு என்ன செய்ய வேண்டும்?',toolTitle:'எப்படி உதவலாம்?',toolsLabel:'எளிய கருவிகள்',
-  imageTool:'போட்டோ அளவு குறை',imageDetail:'JPG, PNG, WebP',pdfTool:'PDF அளவு குறை',pdfDetail:'சிறிய ஆவணங்கள்',
-  mp3Tool:'வீடியோ to MP3',mp3Detail:'சத்தத்தை மட்டும் சேமி',videoTool:'வீடியோ அளவு குறை',videoDetail:'சிறிய MP4',
-  mergeTool:'PDF-களை சேர்',mergeDetail:'பல PDF ஒன்றாக',photosTool:'போட்டோ to PDF',photosDetail:'ஒரே ஆவணமாக',
-  step1:'படி 1 · ஃபைல்களைச் சேர்க்கவும்',safeProcessing:'தனிப்பட்ட செயலாக்கம்',
-  drop:'இங்கே ஃபைல்களை விடுங்கள்',orBrowse:'அல்லது உங்கள் போன் / கணினியில் இருந்து தேர்ந்தெடுங்கள்',
-  chooseFiles:'ஃபைல்களைத் தேர்ந்தெடு',clear:'எல்லாம் நீக்கு',sortHint:'இந்த வரிசையிலேயே PDF பக்கங்கள் வரும்.',
-  step2:'படி 2 · அமைப்புகளைத் தேர்வு செய்க',dontWorry:'தெரியவில்லையா? இயல்புநிலை போதும்.',
-  sizeQuality:'அளவு மற்றும் தரம்',small:'மிகச் சிறிய அளவு',balanced:'பரிந்துரை · சமநிலை',quality:'சிறந்த தரம்',
-  outputFormat:'போட்டோ வடிவம்',keepFormat:'அதே வடிவம்',photoWidth:'போட்டோ பரிமாணம்',keepSize:'அதே பரிமாணம்',
-  soundQuality:'ஒலி தரம்',privacyLine:'பாதுகாப்பான செயலாக்கம் · பதிவிறக்கத்திற்குப் பின் நீக்கம்',cancel:'ரத்துசெய்',
-  download:'ஃபைலைப் பதிவிறக்கு',easyLabel:'1, 2, 3 போல எளிது',howTitle:'யாரும் பயன்படுத்தலாம்.',
-  howSubtitle:'குழப்பமான கருவிகள் இல்லை. இன்ஸ்டால் தேவையில்லை.',how1Title:'ஒரு கருவியைத் தேர்வு செய்',
-  how1Text:'போட்டோ, PDF குறைக்கவா அல்லது வீடியோவில் இருந்து MP3 எடுக்கவா?',how2Title:'ஃபைலைச் சேர்',
-  how2Text:'உங்கள் சாதனத்தில் இருந்து தேர்வுசெய்து அமைப்புகளைப் பயன்படுத்தவும்.',how3Title:'புதிய ஃபைலைப் பெறு',
-  how3Text:'ஒரு கிளிக்கில் பதிவிறக்கு. கணக்கு தேவையில்லை.',noticeTitle:'ஃபைல் அளவு குறித்த குறிப்பு',
-  noticeText:'ஏற்கனவே சிறியதாக உள்ள ஃபைல்கள் மேலும் குறையாமல் இருக்கலாம். கையொப்பமிடப்பட்ட PDF-களை சுருக்க வேண்டாம்.',
-  footerText:'ஃபைல் வேலைகள் இனி எளிது. ஆன்லைனில் செயலாக்க வசதியான ஃபைல்களை மட்டும் பதிவேற்றுங்கள்.'
+  navHow:'எப்படி பயன்படுத்துவது?',eyebrow:'உங்கள் கோப்புகளை எளிதாக மாற்ற உதவும் இணையதளம்',
+  headline:'பெரிய ஃபைலா? <span>இனி கவலை வேண்டாம்!</span>',
+  subtitle:'புகைப்படங்கள் மற்றும் PDF கோப்புகளின் அளவைக் குறைக்கலாம். வீடியோக்களை MP3 ஆக மாற்றலாம். இவை அனைத்தையும் சில கிளிக்குகளில் எளிதாகச் செய்யலாம்.',
+  perk1:'பதிவு செய்ய வேண்டாம்',perk2:'கோப்புகள் நிரந்தரமாகச் சேமிக்கப்படாது',perk3:'எளிதாகப் பதிவிறக்கலாம்',
+  selectAction:'உங்கள் தேவைக்கேற்ப 6 எளிய வசதிகள் உள்ளன.',toolTitle:'உங்களுக்கு என்ன செய்ய வேண்டும்?',toolsLabel:'எளிய வசதிகள்',
+  imageTool:'புகைப்படத்தின் அளவைக் குறைக்க',imageDetail:'JPG, PNG, WebP புகைப்படங்களின் அளவைக் குறைக்கலாம்.',
+  pdfTool:'PDF அளவைக் குறைக்க',pdfDetail:'PDF கோப்புகளைச் சிறிய அளவிற்கு மாற்றலாம்.',
+  mp3Tool:'வீடியோவை MP3 ஆக மாற்ற',mp3Detail:'வீடியோவில் உள்ள ஒலியை மட்டும் தனியாகப் பதிவிறக்கலாம்.',
+  videoTool:'வீடியோ அளவைக் குறைக்க',videoDetail:'வீடியோவின் அளவைக் குறைத்து MP4 கோப்பாகப் பெறலாம்.',
+  mergeTool:'PDF கோப்புகளை ஒன்றிணைக்க',mergeDetail:'பல PDF கோப்புகளை ஒரே PDF ஆக இணைக்கலாம்.',
+  photosTool:'புகைப்படங்களை PDF ஆக மாற்ற',photosDetail:'ஒன்று அல்லது பல புகைப்படங்களை PDF கோப்பாக மாற்றலாம்.',
+  step1:'படி 1: கோப்புகளைத் தேர்ந்தெடுக்கவும்',safeProcessing:'பாதுகாப்பான செயலாக்கம்',
+  drop:'கோப்புகளை இங்கே சேர்க்கவும்',orBrowse:'உங்கள் மொபைல் அல்லது கணினியிலிருந்து கோப்புகளைத் தேர்ந்தெடுக்கவும்.',
+  chooseFiles:'கோப்புகளைத் தேர்ந்தெடுக்கவும்',clear:'அனைத்தையும் நீக்கவும்',sortHint:'இந்த வரிசையிலேயே PDF பக்கங்கள் வரும்.',
+  step2:'படி 2: தேவையான அமைப்புகளைத் தேர்ந்தெடுக்கவும்',dontWorry:'எவ்வளவு அளவைக் குறைக்க வேண்டும் என்பதை நீங்களே முடிவு செய்யலாம்.',
+  sizeQuality:'புகைப்படத்தின் அளவு மற்றும் தரம்',small:'மிகக் குறைந்த கோப்பு அளவு',balanced:'அளவும் தரமும் சமநிலையில் (பரிந்துரைக்கப்படுகிறது)',quality:'சிறந்த படத் தரம்',
+  outputFormat:'புகைப்படத்தின் வகை',keepFormat:'அதே வகையில் வைத்திருக்கலாம்',photoWidth:'புகைப்படத்தின் பரிமாணம்',keepSize:'அசல் அளவு',
+  soundQuality:'ஒலியின் தரம்',privacyLine:'செயலாக்கப்பட்ட கோப்புகள் நிரந்தரமாகச் சேமிக்கப்படாது.',cancel:'ரத்துசெய்யவும்',
+  download:'மாற்றப்பட்ட கோப்பைப் பதிவிறக்கவும்',easyLabel:'எளிதாகப் பயன்படுத்தலாம்',howTitle:'மூன்றே படிகளில் உங்கள் வேலை முடிந்துவிடும்!',
+  howSubtitle:'கணக்குத் தொடங்கவோ தனியாக மென்பொருள் நிறுவவோ தேவையில்லை.',how1Title:'தேவையான வசதியைத் தேர்ந்தெடுக்கவும்',
+  how1Text:'புகைப்படத்தின் அளவைக் குறைக்க வேண்டுமா? PDF கோப்புகளை இணைக்க வேண்டுமா? வீடியோவை MP3 ஆக மாற்ற வேண்டுமா? உங்கள் தேவையைத் தேர்ந்தெடுக்கவும்.',
+  how2Title:'கோப்பைப் பதிவேற்றவும்',how2Text:'உங்கள் மொபைல் அல்லது கணினியிலிருந்து கோப்பைத் தேர்ந்தெடுத்து, தேவையான அமைப்புகளைச் செய்யவும்.',
+  how3Title:'மாற்றப்பட்ட கோப்பைப் பதிவிறக்கவும்',how3Text:'சில எளிய படிகளில் மாற்றப்பட்ட கோப்பைப் பெற்றுக்கொள்ளலாம்.',noticeTitle:'முக்கியக் குறிப்புகள்',
+  noticeText:'ஏற்கனவே சிறிய அளவில் இருக்கும் கோப்புகளின் அளவு மேலும் குறையாமல் போகலாம். டிஜிட்டல் கையொப்பமிடப்பட்ட PDF கோப்புகளைச் சுருக்க வேண்டாம். கையொப்பத்தின் செல்லுபடியாகும் தன்மை பாதிக்கப்படலாம். இணையத்தில் பதிவேற்றுவதற்குப் பாதுகாப்பான கோப்புகளை மட்டும் பயன்படுத்தவும். செயலாக்கப்பட்ட கோப்புகள் நிரந்தரமாகச் சேமிக்கப்படாது.',
+  footerText:'கோப்பு வேலைகள் இனி சுலபம்! புகைப்படம், PDF, வீடியோ என உங்கள் அன்றாடக் கோப்பு வேலைகளை ஒரே இடத்தில் எளிதாகச் செய்யுங்கள்.'
 };
 const taMode = {
-  image:['போட்டோக்களைப் பதிவேற்று','அளவு குறைக்க வேண்டிய படங்களைத் தேர்வு செய்யவும்.','போட்டோ அளவை குறை','மேலும் குறைக்க WebP அல்லது அளவு மாற்றத்தைத் தேர்வுசெய்க.'],
-  pdf:['PDF-களைப் பதிவேற்று','சுலபமாக பகிர PDF அளவை குறைக்கவும்.','PDF அளவை குறை','அசல் எழுத்துருக்களும் உரையும் பாதுகாக்கப்படும். அளவு குறைவு மாறுபடும். டிஜிட்டல் கையொப்பம் உள்ள PDF-களைத் தவிர்க்கவும்.'],
-  mp3:['வீடியோவைப் பதிவேற்று','வீடியோவில் உள்ள ஒலியை MP3 ஆக எடுங்கள்.','MP3-ஐ உருவாக்கு','வீடியோவில் ஒலி இருக்க வேண்டும்.'],
-  video:['வீடியோக்களைப் பதிவேற்று','பகிர்வதற்காக வீடியோ அளவை குறைக்கவும்.','வீடியோ அளவை குறை','வீடியோ மாற்ற சிறிது கூடுதல் நேரம் ஆகலாம்.'],
-  merge:['PDF-களைத் தேர்வு செய்','இரண்டு அல்லது அதற்கு மேற்பட்ட PDF-களைச் சேர்க்கவும்.','PDF-களைச் சேர்','பக்க வரிசையை மாற்ற மேலே / கீழே பட்டனை அழுத்தவும்.'],
-  'photos-pdf':['போட்டோக்களைத் தேர்வு செய்','போட்டோக்களை ஒரே PDF ஆக மாற்றவும்.','PDF-ஐ உருவாக்கு','ஒவ்வொரு படமும் ஒரு பக்கமாக வரும்.']
+  image:['புகைப்படங்களைத் தேர்ந்தெடுக்கவும்','உங்கள் மொபைல் அல்லது கணினியிலிருந்து அளவைக் குறைக்க வேண்டிய புகைப்படங்களைத் தேர்ந்தெடுக்கவும்.','புகைப்படத்தின் அளவைக் குறைக்க','கோப்பின் அளவை மேலும் குறைக்க WebP வகையையோ சிறிய பரிமாணத்தையோ தேர்ந்தெடுக்கலாம்.'],
+  pdf:['PDF கோப்புகளைத் தேர்ந்தெடுக்கவும்','PDF கோப்புகளைச் சிறிய அளவிற்கு மாற்றலாம்.','PDF அளவைக் குறைக்க','அசல் எழுத்துருக்களும் உரையும் பாதுகாக்கப்படும். டிஜிட்டல் கையொப்பமிடப்பட்ட PDF கோப்புகளைச் சுருக்க வேண்டாம்.'],
+  mp3:['வீடியோவைத் தேர்ந்தெடுக்கவும்','வீடியோவில் உள்ள ஒலியை மட்டும் தனியாகப் பதிவிறக்கலாம்.','வீடியோவை MP3 ஆக மாற்ற','வீடியோவில் ஒலி இருக்க வேண்டும்.'],
+  video:['வீடியோக்களைத் தேர்ந்தெடுக்கவும்','வீடியோவின் அளவைக் குறைத்து MP4 கோப்பாகப் பெறலாம்.','வீடியோ அளவைக் குறைக்க','வீடியோ மாற்றத்திற்கு சிறிது கூடுதல் நேரம் ஆகலாம்.'],
+  merge:['PDF கோப்புகளைத் தேர்ந்தெடுக்கவும்','பல PDF கோப்புகளை ஒரே PDF ஆக இணைக்கலாம்.','PDF கோப்புகளை ஒன்றிணைக்க','பக்க வரிசையை மாற்ற மேலே / கீழே உள்ள பொத்தான்களைப் பயன்படுத்தவும்.'],
+  'photos-pdf':['புகைப்படங்களைத் தேர்ந்தெடுக்கவும்','ஒன்று அல்லது பல புகைப்படங்களை PDF கோப்பாக மாற்றலாம்.','புகைப்படங்களை PDF ஆக மாற்ற','ஒவ்வொரு புகைப்படமும் ஒரு பக்கமாக வரும். தேவையான வரிசையில் புகைப்படங்களை அமைக்கவும்.']
+};
+const taOptions = {
+  format:{jpg:'JPG – பெரும்பாலான சாதனங்களில் பயன்படுத்த ஏற்றது',webp:'WebP – குறைந்த இடத்தைப் பயன்படுத்த உதவும்',png:'PNG – எழுத்துகளும் விவரங்களும் தெளிவாக இருக்க உதவும்'},
+  'max-width':{'2048':'2048 px – பெரிய அளவு','1600':'1600 px – பரிந்துரைக்கப்படும் அளவு','1024':'1024 px – நடுத்தர அளவு','640':'640 px – சிறிய அளவு'},
+  bitrate:{'96':'96 kbps – குறைந்த கோப்பு அளவு','128':'128 kbps – வழக்கமான தரம்','192':'192 kbps – பரிந்துரைக்கப்படும் தரம்','256':'256 kbps – சிறந்த ஒலித் தரம்'}
 };
 let mode = 'image';
 let selectedFiles = [];
@@ -126,7 +134,7 @@ function redrawFiles(){
     remove.addEventListener('click',()=>{selectedFiles.splice(index,1);clearResult();redrawFiles();});
     actions.append(remove);row.append(mark,metadata,actions);els.list.append(row);
   });
-  els.count.textContent=lang==='ta' ? `தேர்ந்தெடுக்கப்பட்ட ஃபைல்கள் (${selectedFiles.length})` : `Selected files (${selectedFiles.length})`;
+  els.count.textContent=lang==='ta' ? `தேர்ந்தெடுக்கப்பட்ட கோப்புகள் (${selectedFiles.length})` : `Selected files (${selectedFiles.length})`;
   els.run.disabled=selectedFiles.length < (mode==='merge'?2:1) || !!request;
 }
 function swap(a,b){[selectedFiles[a],selectedFiles[b]]=[selectedFiles[b],selectedFiles[a]];clearResult();redrawFiles();}
@@ -152,8 +160,8 @@ function chooseMode(next, retainFiles=false){
   els.presetSetting.hidden=!(mode==='image'||mode==='video');
   els.formatSetting.hidden=mode!=='image';els.widthSetting.hidden=mode!=='image';
   els.bitrateSetting.hidden=mode!=='mp3';
-  $('upload-limit').textContent=lang==='ta' ? `மொத்தம் ${Math.floor(maxBytes/1_000_000)} MB வரை · ${maxFiles} ஃபைல்கள்` : `Up to ${Math.floor(maxBytes/1_000_000)} MB total · ${maxFiles} files at once`;
-  if(maxOutputMb)$('upload-limit').textContent+=lang==='ta' ? ` · பதிவிறக்கம் ${maxOutputMb} MB வரை` : ` · Downloads up to ${maxOutputMb} MB`;
+  $('upload-limit').textContent=lang==='ta' ? `ஒரே நேரத்தில் அதிகபட்சம் ${maxFiles} கோப்புகளைச் சேர்க்கலாம். மொத்த அளவு ${Math.floor(maxBytes/1_000_000)} MB-க்குள் இருக்க வேண்டும்.` : `Up to ${Math.floor(maxBytes/1_000_000)} MB total · ${maxFiles} files at once`;
+  if(maxOutputMb)$('upload-limit').textContent+=lang==='ta' ? ` பதிவிறக்க அளவும் ${maxOutputMb} MB-க்குள் இருக்க வேண்டும்.` : ` · Downloads up to ${maxOutputMb} MB`;
   redrawFiles();
 }
 function switchLanguage(){
@@ -171,6 +179,13 @@ function switchLanguage(){
     if(!heading.dataset.original)heading.dataset.original=heading.innerHTML;
     heading.innerHTML=ta.headline;
   }else if(heading.dataset.original)heading.innerHTML=heading.dataset.original;
+  for(const [id, labels] of Object.entries(taOptions)){
+    $(id).querySelectorAll('option').forEach(option=>{
+      if(!labels[option.value])return;
+      if(!option.dataset.original)option.dataset.original=option.textContent;
+      option.textContent=lang==='ta'?labels[option.value]:option.dataset.original;
+    });
+  }
   chooseMode(mode,true);
 }
 function setBusy(busy){
@@ -194,7 +209,7 @@ function convert(){
   if(error){showError(error);return;}
   if(mode==='merge'&&selectedFiles.length<2){showError('Choose at least two PDFs to join.');return;}
   clearResult();setBusy(true);
-  els.progress.hidden=false;els.progressTitle.textContent=lang==='ta'?'உங்கள் ஃபைல்கள் தயாராகின்றன...':'Working on your files...';
+  els.progress.hidden=false;els.progressTitle.textContent=lang==='ta'?'உங்கள் கோப்புகள் தயாராகின்றன...':'Working on your files...';
   els.progressInfo.textContent=lang==='ta'?'இந்தப் பக்கத்தை மூட வேண்டாம்.':'Uploading files...';
   els.progressBar.classList.remove('indeterminate');els.progressBar.style.width='3%';
   const data=new FormData();selectedFiles.forEach(file=>data.append('files',file,file.name));
@@ -221,16 +236,16 @@ function convert(){
     resultUrl=URL.createObjectURL(xhr.response);
     const name=parseFilename(xhr.getResponseHeader('Content-Disposition'));
     els.download.href=resultUrl;els.download.download=name;
-    els.resultTitle.textContent=lang==='ta'?'உங்கள் ஃபைல் தயார்!':'Your file is ready!';
+    els.resultTitle.textContent=lang==='ta'?'மாற்றப்பட்ட கோப்பு தயார்!':'Your file is ready!';
     els.resultDetail.textContent=lang==='ta'?name:`${name} · Ready to download`;
     const original=Number(xhr.getResponseHeader('X-Original-Bytes'));
     const output=Number(xhr.getResponseHeader('X-Output-Bytes'));
     const savings=original>0?((original-output)/original*100):0;
     if((mode==='image'||mode==='pdf'||mode==='video')&&savings>0.1){
-      els.summary.textContent=`${fmt(original)} → ${fmt(output)} · ${savings.toFixed(1)}% smaller`;
+      els.summary.textContent=lang==='ta'?`${fmt(original)} → ${fmt(output)} · ${savings.toFixed(1)}% அளவு குறைந்துள்ளது`:`${fmt(original)} → ${fmt(output)} · ${savings.toFixed(1)}% smaller`;
     } else if((mode==='image'||mode==='pdf'||mode==='video')&&savings<=0.1){
-      els.summary.textContent=`${fmt(output)} · No size reduction was achieved with these settings`;
-    } else { els.summary.textContent=`New file size: ${fmt(output)}`; }
+      els.summary.textContent=lang==='ta'?`${fmt(output)} · இந்த அமைப்புகளில் கோப்பின் அளவு குறையவில்லை`:`${fmt(output)} · No size reduction was achieved with these settings`;
+    } else { els.summary.textContent=lang==='ta'?`மாற்றப்பட்ட கோப்பின் அளவு: ${fmt(output)}`:`New file size: ${fmt(output)}`; }
     els.result.hidden=false;els.result.scrollIntoView({behavior:'smooth',block:'nearest'});
   };
   xhr.onerror=()=>{if(request===xhr){request=null;setBusy(false);showError('Network problem. Please check your connection and try again.');}};
