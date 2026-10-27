@@ -78,9 +78,8 @@ def test_responsive_conversion(browser, site, width, height, language, tmp_path)
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (width, language, tool)
         page.locator('[data-tool="image"]').click()
         # Verify the keyboard-accessible picker used on laptops and phones.
-        page.locator('#dropzone').focus()
         with page.expect_file_chooser() as chooser:
-            page.keyboard.press('Enter')
+            page.locator('#dropzone').press('Enter')
         chooser.value.set_files(photo())
         expect(page.locator('.file-name')).to_have_text('தமிழ் அறிக்கை.png')
         expect(page.locator('#convert-button')).to_be_enabled()
