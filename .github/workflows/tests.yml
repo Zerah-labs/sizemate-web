@@ -1,5 +1,5 @@
-name: Conversion and responsive UI tests
-on: [push, pull_request]
+name: Test and deploy SizeMate
+on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
@@ -20,3 +20,33 @@ jobs:
         with:
           name: responsive-ui-screenshots
           path: .test-artifacts/**/*.png
+  deploy:
+    name: Deploy production to Vercel
+    needs: test
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: sizemate-production
+      cancel-in-progress: false
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check deployment credentials
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo 'Add VERCEL_TOKEN, VERCEL_ORG_ID and VERCEL_PROJECT_ID to repository Actions secrets.'
+            exit 1
+          fi
+      - run: npm install --global vercel@65.4.0
+      - name: Deploy tested commit
+        run: vercel deploy --prod --yes --token "$VERCEL_TOKEN"
+      - name: Check public application
+        run: |
+          curl --fail --retry 3 https://sizemate-web.vercel.app/health
+          curl --fail --retry 3 https://sizemate-web.vercel.app/api/limits

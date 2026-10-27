@@ -146,3 +146,9 @@ Vercel detects `app/main.py` as a FastAPI application. `vercel.json` configures 
 The Vercel demo allows **4 MB total uploads and 4 MB downloads** because Vercel Functions enforce a 4.5 MB payload limit. The interface reads and displays the hosted limits. Local and Docker deployments keep the 24 MB upload default. Files exceeding the hosted output limit return a clear message. Supporting larger files on Vercel requires direct object-storage uploads and downloads.
 
 Connect the Vercel project to `Zerah-labs/sizemate-web`, production branch `main`, to enable automatic deployments from GitHub. Deployment credentials stay outside the repository.
+
+### GitHub Actions deployment
+
+The `Test and deploy SizeMate` workflow runs conversion and responsive browser tests on pushes and pull requests. A successful push to `main` deploys the tested commit to the existing Vercel project. Pull requests never run the deployment job. You can also run the workflow manually from GitHub Actions.
+
+Required encrypted repository Actions secrets: `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, and `VERCEL_TOKEN`. Create a Vercel access token restricted to the SizeMate project/team, with an expiration, and store it directly as `VERCEL_TOKEN`; never commit it or put it in workflow YAML. Renew it before it expires. This pipeline does not require Vercel's native GitHub repository connection.
