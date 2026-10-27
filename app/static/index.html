@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f9fc">
+  <meta name="description" content="Easily shrink photos and PDFs, convert MP4 to MP3, compress videos, merge PDFs and turn pictures into PDFs — all from your browser.">
+  <title>SizeMate – Make Your Files Smaller</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <header class="site-header container">
+    <a class="brand" href="/" aria-label="SizeMate home"><span class="brand-icon"><svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect x="6" y="6" width="24" height="24" rx="8" stroke="currentColor" stroke-width="2.4"/><path d="M12 18h12M20 13l5 5-5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Size<span class="brand-strong">Mate</span><span class="brand-dot">.</span></span></a>
+    <nav class="nav-controls" aria-label="Main navigation"><a href="#how-it-works" class="nav-link" data-i18n="navHow">How it works</a><button class="language-switch" id="language-toggle" type="button" aria-label="Switch language">தமிழ்</button></nav>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-eyebrow"><span class="live-dot"></span><span data-i18n="eyebrow">Your all-in-one file helper</span></div>
+      <h1 data-i18n-html="headline">Big files? <span>Small problem.</span></h1>
+      <p class="hero-subtitle" data-i18n="subtitle">Reduce photo and PDF sizes, convert videos to MP3, and do more — in just a few clicks. No tech skills needed.</p>
+      <div class="hero-perks"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span data-i18n="perk1">No signup</span></span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s8-4 8-10V5l-8-3-8 3v6c0 6 8 10 8 10Z"/><path d="m9 11 2 2 4-4"/></svg><span data-i18n="perk2">Files not kept</span></span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M4 17v4h16v-4"/></svg><span data-i18n="perk3">Easy downloads</span></span></div>
+    </section>
+
+    <section id="tool" class="workspace container" aria-label="File tools">
+      <div class="workspace-heading"><div><p class="eyebrow-small" data-i18n="selectAction">CHOOSE WHAT YOU WANT TO DO</p><h2 data-i18n="toolTitle">What can we help with?</h2></div><span class="tool-count">6 <span data-i18n="toolsLabel">simple tools</span></span></div>
+      <div class="tool-grid" id="tools" role="group" aria-label="Choose file task">
+        <button type="button" class="tool-tile selected" data-tool="image" aria-pressed="true"><span class="tile-icon teal"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9" r="1.5"/><path d="m4 17 5-5 4 3 3-4 5 6"/></svg></span><span class="tile-label" data-i18n="imageTool">Shrink Photos</span><span class="tile-detail" data-i18n="imageDetail">JPG, PNG, WebP</span></button>
+        <button type="button" class="tool-tile" data-tool="pdf" aria-pressed="false"><span class="tile-icon rose"><svg viewBox="0 0 24 24"><path d="M7 2h7l5 5v14H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M14 2v6h5M8 13h8M8 17h6"/></svg></span><span class="tile-label" data-i18n="pdfTool">Shrink PDFs</span><span class="tile-detail" data-i18n="pdfDetail">Smaller documents</span></button>
+        <button type="button" class="tool-tile" data-tool="mp3" aria-pressed="false"><span class="tile-icon violet"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m10 9 6 3-6 3V9ZM5 18h14"/></svg></span><span class="tile-label" data-i18n="mp3Tool">Video to MP3</span><span class="tile-detail" data-i18n="mp3Detail">Save just the sound</span></button>
+        <button type="button" class="tool-tile" data-tool="video" aria-pressed="false"><span class="tile-icon sky"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="15" height="14" rx="3"/><path d="m17 10 5-3v10l-5-3"/><path d="m6 12 3 3 4-6"/></svg></span><span class="tile-label" data-i18n="videoTool">Shrink Videos</span><span class="tile-detail" data-i18n="videoDetail">Smaller MP4 files</span></button>
+        <button type="button" class="tool-tile" data-tool="merge" aria-pressed="false"><span class="tile-icon amber"><svg viewBox="0 0 24 24"><path d="M4 4h10v13H4zM10 8h10v13H10"/><path d="M13 14h4m-2-2v4"/></svg></span><span class="tile-label" data-i18n="mergeTool">Join PDFs</span><span class="tile-detail" data-i18n="mergeDetail">Combine pages</span></button>
+        <button type="button" class="tool-tile" data-tool="photos-pdf" aria-pressed="false"><span class="tile-icon lime"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="13" height="13" rx="2"/><path d="m4 13 4-4 3 3 2-2 3 3"/><path d="M10 19h10V9"/><path d="M14 22h7"/></svg></span><span class="tile-label" data-i18n="photosTool">Photos to PDF</span><span class="tile-detail" data-i18n="photosDetail">Make one document</span></button>
+      </div>
+
+      <div class="upload-panel">
+        <div class="panel-head"><div><p class="panel-kicker" data-i18n="step1">STEP 1 · ADD YOUR FILES</p><h3 id="upload-heading">Upload your photos</h3><p id="upload-hint">Pick photos you want to make smaller.</p></div><span class="privacy-pill"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-i18n="safeProcessing">Private processing</span></span></div>
+        <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Choose or drop files"><div class="drop-icon"><svg viewBox="0 0 24 24"><path d="M12 16V4m-5 5 5-5 5 5"/><path d="M4 15v5h16v-5"/></svg></div><h4 data-i18n="drop">Drop your files here</h4><p data-i18n="orBrowse">or click to choose from your phone or computer</p><span class="choose-button" data-i18n="chooseFiles">Choose files</span><small id="upload-limit">Up to 24 MB total · 12 files at once</small></div>
+        <input id="file-input" type="file" multiple hidden aria-label="Select files">
+        <div class="selected-area" id="selected-area" hidden><div class="selected-heading"><strong id="file-count">Selected files (0)</strong><button type="button" class="remove-all" id="clear-files" data-i18n="clear">Clear all</button></div><div id="selected-list" class="selected-list"></div><p class="sort-hint" id="sort-hint" hidden data-i18n="sortHint">The order shown here is the order used in your PDF.</p></div>
+        <div class="option-area" id="option-area"><div class="step-head"><span data-i18n="step2">STEP 2 · CHOOSE YOUR SETTINGS</span><p data-i18n="dontWorry">Not sure? Default settings work great.</p></div><div class="settings-grid"><div id="preset-setting" class="setting-block"><label for="preset" data-i18n="sizeQuality">File size &amp; quality</label><select id="preset"><option value="small" data-i18n="small">Smallest file</option><option value="balanced" selected data-i18n="balanced">Recommended · Balanced</option><option value="quality" data-i18n="quality">Best quality</option></select></div><div class="setting-block" id="format-setting"><label for="format" data-i18n="outputFormat">Save photo as</label><select id="format"><option value="original" data-i18n="keepFormat">Keep usual format</option><option value="jpg">JPG · Very compatible</option><option value="webp">WebP · Often smaller</option><option value="png">PNG · Sharp text</option></select></div><div class="setting-block" id="width-setting"><label for="max-width" data-i18n="photoWidth">Photo dimensions</label><select id="max-width"><option value="0" data-i18n="keepSize">Keep original dimensions</option><option value="2048">2048 px · Large</option><option value="1600">1600 px · Recommended</option><option value="1024">1024 px · Medium</option><option value="640">640 px · Small</option></select></div><div class="setting-block" id="bitrate-setting" hidden><label for="bitrate" data-i18n="soundQuality">Sound quality</label><select id="bitrate"><option value="96">96 kbps · Smaller file</option><option value="128">128 kbps · Standard</option><option value="192" selected>192 kbps · Recommended</option><option value="256">256 kbps · Higher quality</option></select></div></div><p class="info-note" id="setting-note"></p></div>
+        <div class="action-area"><button id="convert-button" class="primary-button" type="button" disabled><span id="convert-label">Make my photos smaller</span><svg viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button><p class="file-privacy" data-i18n="privacyLine">Processed securely · Automatically cleared after download</p></div>
+        <div class="progress-panel" id="progress-panel" hidden role="status" aria-live="polite"><div class="progress-copy"><strong id="progress-title">Working on your files...</strong><button type="button" id="cancel-button" data-i18n="cancel">Cancel</button></div><p id="progress-info">Please keep this tab open until it's ready.</p><div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div></div>
+        <div class="result-panel" id="result-panel" hidden aria-live="polite"><span class="success-icon"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span><div class="result-content"><strong id="result-title">Your file is ready!</strong><p id="result-detail">Download your file below.</p><div class="sizes-summary" id="sizes-summary"></div><a id="download-link" class="download-button" href="#" download><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M4 17v4h16v-4"/></svg><span data-i18n="download">Download your file</span></a></div></div>
+        <div id="error-panel" class="error-panel" role="alert" hidden></div>
+      </div>
+    </section>
+
+    <section class="lower container" id="how-it-works"><div class="lower-heading"><p class="eyebrow-small" data-i18n="easyLabel">AS EASY AS 1, 2, 3</p><h2 data-i18n="howTitle">Anyone can use SizeMate.</h2><p data-i18n="howSubtitle">No confusing tools. No software to install.</p></div><div class="steps-grid"><article><span class="step-number">01</span><h3 data-i18n="how1Title">Pick what to do</h3><p data-i18n="how1Text">Want a smaller photo, a lighter PDF, or music from a video? Choose your tool.</p></article><article><span class="step-number">02</span><h3 data-i18n="how2Title">Add your file</h3><p data-i18n="how2Text">Select from your device, then use the ready-made settings.</p></article><article><span class="step-number">03</span><h3 data-i18n="how3Title">Get your new file</h3><p data-i18n="how3Text">Tap one button to download. No account or email needed.</p></article></div></section>
+    <section class="notice container"><span class="notice-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/></svg></span><div><strong data-i18n="noticeTitle">One small note about file size</strong><p data-i18n="noticeText">Some files are already optimized, so they may not get much smaller. MP3 extraction and PDF merging create new files rather than simply reducing size. Digitally signed PDFs should not be recompressed.</p></div></section>
+  </main>
+  <footer class="container footer"><div class="footer-brand">Size<span>Mate</span><i>.</i></div><p data-i18n="footerText">Files made simple. Upload only files you're comfortable processing online.</p><span>© 2026 SizeMate</span></footer>
+</body>
+</html>

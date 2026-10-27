@@ -1,0 +1,19 @@
+# Render Blueprint: Docker-based SizeMate web service.
+# This defaults to the FREE plan for a limited demo, NOT production.
+# After evaluation, switch to plan: 1c-2g for a more capable paid service.
+services:
+  - type: web
+    name: sizemate-file-tools
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PORT
+        value: "8080"
+      - key: MAX_UPLOAD_MB
+        value: "24"
+      - key: MAX_CONCURRENT_JOBS
+        value: "1"
