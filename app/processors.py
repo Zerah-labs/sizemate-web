@@ -2,9 +2,9 @@
 from __future__ import annotations
 
 import io
-import re
 import shutil
 import subprocess
+import unicodedata
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -24,7 +24,11 @@ class ProcessingError(Exception):
 def safe_stem(filename: str) -> str:
     """Make a benign output filename, never an input path."""
     name = Path(filename.replace('\\', '/').split('/')[-1]).stem
-    clean = re.sub(r"[^A-Za-z0-9_ -]", "", name).strip(' ._-')
+    # Combining marks are essential to Tamil, Hindi and many other scripts.
+    name = unicodedata.normalize('NFC', name)
+    clean = ''.join(char for char in name
+                    if unicodedata.category(char)[0] in {'L', 'M', 'N'}
+                    or char in '_ -').strip(' ._-')
     return (clean or 'file')[:65]
 
 
@@ -96,26 +100,21 @@ def optimize_image(source: Path, dest: Path, preset: str, output_type: str = 'or
 
 
 def optimize_pdf(source: Path, dest: Path, preset: str) -> None:
-    # Reject encrypted input, which Ghostscript might otherwise hang on.
+    # Preserve embedded fonts, glyph mappings and content streams. Re-distilling
+    # through a printer driver can substitute fonts in multilingual documents.
     try:
         with fitz.open(source) as pdf:
             if pdf.needs_pass:
                 raise ProcessingError('Please unlock your password-protected PDF before uploading.')
             if pdf.page_count == 0:
                 raise ProcessingError('This PDF contains no pages.')
+            pdf.save(dest, garbage=4, deflate=True, deflate_images=True,
+                     deflate_fonts=True)
     except (fitz.FileDataError, fitz.EmptyFileError) as exc:
         raise ProcessingError("This PDF appears damaged or invalid.") from exc
-    settings = {'small': ('/screen', '90'), 'balanced': ('/ebook', '125'), 'quality': ('/printer', '170')}
-    gs_preset, dpi = settings[preset]
-    command(['gs', '-q', '-dSAFER', '-dBATCH', '-dNOPAUSE', '-sDEVICE=pdfwrite',
-             '-dCompatibilityLevel=1.6', '-dDetectDuplicateImages=true',
-             '-dCompressFonts=true', '-dSubsetFonts=true',
-             f'-dPDFSETTINGS={gs_preset}', '-dDownsampleColorImages=true',
-             '-dDownsampleGrayImages=true', f'-dColorImageResolution={dpi}',
-             f'-dGrayImageResolution={dpi}', f'-sOutputFile={dest}', str(source)], timeout=160)
     if not dest.exists() or dest.stat().st_size == 0:
         raise ProcessingError("Couldn't compress this PDF.")
-    # PDFwrite may increase small PDFs, so provide original if no improvement.
+    # Provide the original if lossless compression does not improve its size.
     if dest.stat().st_size >= source.stat().st_size:
         shutil.copyfile(source, dest)
 

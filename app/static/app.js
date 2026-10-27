@@ -20,7 +20,7 @@ const modeData = {
     action:'Make my photos smaller', note:'Resize or choose WebP if you need even smaller images.'},
   pdf: {accept:'.pdf',multi:true,heading:'Upload your PDFs',
     hint:'Make PDFs easier to share on WhatsApp or email.',
-    action:'Make my PDFs smaller',note:'Pages and selectable text are usually preserved. Avoid digitally signed PDFs.'},
+    action:'Make my PDFs smaller',note:'Preserves existing fonts and text in all languages. Size reduction varies. Avoid digitally signed PDFs.'},
   mp3: {accept:'.mp4,.mov,.mkv,.webm,.avi,.m4v', multi:true,
     heading:'Upload a video', hint:'Get the sound from a video as an MP3 music file.',
     action:'Extract MP3 audio', note:'The video must contain sound. Works with MP4, MOV, MKV and WebM.'},
@@ -60,7 +60,7 @@ const ta = {
 };
 const taMode = {
   image:['போட்டோக்களைப் பதிவேற்று','அளவு குறைக்க வேண்டிய படங்களைத் தேர்வு செய்யவும்.','போட்டோ அளவை குறை','மேலும் குறைக்க WebP அல்லது அளவு மாற்றத்தைத் தேர்வுசெய்க.'],
-  pdf:['PDF-களைப் பதிவேற்று','சுலபமாக பகிர PDF அளவை குறைக்கவும்.','PDF அளவை குறை','டிஜிட்டல் கையொப்பம் உள்ள PDF-களைத் தவிர்க்கவும்.'],
+  pdf:['PDF-களைப் பதிவேற்று','சுலபமாக பகிர PDF அளவை குறைக்கவும்.','PDF அளவை குறை','அசல் எழுத்துருக்களும் உரையும் பாதுகாக்கப்படும். அளவு குறைவு மாறுபடும். டிஜிட்டல் கையொப்பம் உள்ள PDF-களைத் தவிர்க்கவும்.'],
   mp3:['வீடியோவைப் பதிவேற்று','வீடியோவில் உள்ள ஒலியை MP3 ஆக எடுங்கள்.','MP3-ஐ உருவாக்கு','வீடியோவில் ஒலி இருக்க வேண்டும்.'],
   video:['வீடியோக்களைப் பதிவேற்று','பகிர்வதற்காக வீடியோ அளவை குறைக்கவும்.','வீடியோ அளவை குறை','வீடியோ மாற்ற சிறிது கூடுதல் நேரம் ஆகலாம்.'],
   merge:['PDF-களைத் தேர்வு செய்','இரண்டு அல்லது அதற்கு மேற்பட்ட PDF-களைச் சேர்க்கவும்.','PDF-களைச் சேர்','பக்க வரிசையை மாற்ற மேலே / கீழே பட்டனை அழுத்தவும்.'],
@@ -148,7 +148,7 @@ function chooseMode(next, retainFiles=false){
   const strings=lang==='ta'?taMode[mode]:[data.heading,data.hint,data.action,data.note];
   [els.heading.textContent,els.hint.textContent,els.runLabel.textContent,els.note.textContent]=strings;
   els.picker.accept=data.accept;
-  els.presetSetting.hidden=!(mode==='image'||mode==='pdf'||mode==='video');
+  els.presetSetting.hidden=!(mode==='image'||mode==='video');
   els.formatSetting.hidden=mode!=='image';els.widthSetting.hidden=mode!=='image';
   els.bitrateSetting.hidden=mode!=='mp3';
   $('upload-limit').textContent=lang==='ta' ? `மொத்தம் ${Math.floor(maxBytes/1_000_000)} MB வரை · ${maxFiles} ஃபைல்கள்` : `Up to ${Math.floor(maxBytes/1_000_000)} MB total · ${maxFiles} files at once`;
@@ -175,6 +175,10 @@ function setBusy(busy){
   els.run.disabled=busy || selectedFiles.length < (mode==='merge'?2:1);
   document.querySelectorAll('[data-tool]').forEach(el=>el.disabled=busy);
   $('clear-files').disabled=busy;
+  $('language-toggle').disabled=busy;
+  els.list.querySelectorAll('button').forEach(el=>el.disabled=busy);
+  if(!busy)redrawFiles();
+  els.drop.setAttribute('aria-disabled',String(busy));
 }
 function parseFilename(disposition){
   const encoded=(disposition||'').match(/filename\*=utf-8''([^;]+)/i);

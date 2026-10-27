@@ -5,7 +5,7 @@ A mobile-friendly, bilingual (English + Tamil) website for non-technical users t
 | Tool | Input | Output |
 |---|---|---|
 | Shrink Photos | JPG, JPEG, PNG, WebP, BMP, TIFF | JPG / PNG / WebP, optionally resized |
-| Shrink PDFs | PDF | Optimized PDF (Ghostscript) |
+| Shrink PDFs | PDF | Lossless PDF compression; preserves existing fonts and text |
 | Video to MP3 | MP4, MOV, MKV, WebM, AVI, M4V | MP3 with selectable bitrate |
 | Shrink Videos | MP4, MOV, MKV, WebM, AVI, M4V | H.264 MP4 |
 | Join PDFs | 2–12 PDFs | One merged PDF, ordered as selected |
@@ -15,7 +15,7 @@ For multiple independent conversions, results come back in a ZIP file. All opera
 
 ## Run locally (Windows, macOS, Linux)
 
-Install Python 3.12+, **FFmpeg**, and **Ghostscript** first. Ensure `ffmpeg` and `gs` are available in PATH (on Windows Ghostscript may provide `gswin64c.exe`; use Docker if this is inconvenient).
+Install Python 3.12+, **FFmpeg** first. Ensure `ffmpeg` is available in PATH for video and audio tools. PDF compression uses PyMuPDF and does not require Ghostscript.
 
 ```bash
 python -m venv .venv
@@ -79,7 +79,7 @@ pip install pytest httpx
 pytest -q
 ```
 
-Tests use real JPG/PNG/PDF/video files and actual Ghostscript/FFmpeg conversion. All six tools have integration tests.
+Tests use real JPG/PNG/PDF/video files, lossless PDF compression and FFmpeg conversion. All six tools have integration tests.
 
 ## Features for non-technical customers
 
@@ -126,3 +126,15 @@ bash deploy-cloudrun.sh YOUR_GOOGLE_CLOUD_PROJECT_ID
 ```
 
 These scripts deploy a **public** application. Check your Google Cloud billing and quota settings before making the site widely available.
+
+## Multilingual files
+
+Unicode filenames (including Tamil, Hindi, Chinese and Arabic) are retained in downloads and ZIP files. PDF compression preserves existing embedded fonts, glyph mappings and selectable text using lossless compression. PDF quality presets are not applied; size savings may be smaller. This does not repair text that is already garbled or fonts missing from the original PDF. Photos remain images; no OCR or text retyping is performed.
+
+## Automated checks
+
+Install development dependencies with `python -m pip install -r requirements-dev.txt`, then install the test browser with `python -m playwright install chromium`. Ensure FFmpeg is on PATH. For the Tamil PDF regression test, install Nirmala (Windows) or Noto Sans Tamil (Linux).
+
+Run `python -m pytest -q tests --basetemp=.test-artifacts` to check all six conversion tools, multilingual filenames and PDFs, and browser layouts at 320, 390, 768 and 1366 pixels in English and Tamil. Browser checks cover keyboard file selection, image conversion and download, file ordering, removal, clearing, validation, and mobile touch targets. These emulate screen sizes; they do not replace testing on physical iOS and Android devices.
+
+To use installed Chrome instead of the downloaded Chromium, set `SIZEMATE_BROWSER_CHANNEL=chrome`. Screenshots are saved under `.test-artifacts/`. GitHub Actions runs the same suite on pushes and pull requests and uploads screenshots.

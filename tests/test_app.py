@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import io
 import subprocess
+import shutil
+from pathlib import Path
+from urllib.parse import unquote
 
 import fitz
 import pytest
@@ -12,6 +15,12 @@ from PIL import Image
 from app.main import app
 
 client = TestClient(app)
+
+
+@pytest.fixture(autouse=True)
+def reset_rate_limits():
+    from app.main import RECENT_REQUESTS
+    RECENT_REQUESTS.clear()
 
 
 def picture(ext='JPEG', dims=(1200, 900)):
@@ -56,7 +65,8 @@ def test_site_and_health():
     assert client.get('/static/app.js').status_code==200
     assert client.get('/api/limits').json()['max_files']==12
     health=client.get('/health').json()
-    assert health['ffmpeg'] and health['ghostscript']
+    assert health['status'] == 'ok'
+    assert health['ffmpeg'] == bool(shutil.which('ffmpeg'))
 
 
 def test_compress_jpeg():
@@ -140,6 +150,48 @@ def test_filename_sanitized():
     assert result.status_code==200, result.text
     assert 'script' in result.headers['content-disposition']
     assert '/' not in result.headers['content-disposition']
+
+
+@pytest.mark.parametrize('name', ['தமிழ் அறிக்கை', 'हिन्दी रिपोर्ट', '中文文件', 'العربية'])
+def test_unicode_download_and_zip_names(name):
+    result = send('image', [(name + '.jpg', picture())])
+    assert result.status_code == 200
+    assert name + '-smaller.jpg' in unquote(result.headers['content-disposition'])
+    result = send('image', [(name + '.jpg', picture()), (name + '.jpg', picture())])
+    assert result.status_code == 200
+    import zipfile
+    with zipfile.ZipFile(io.BytesIO(result.content)) as archive:
+        assert archive.namelist() == [name + '-smaller.jpg', name + '-smaller-2.jpg']
+
+
+@pytest.mark.parametrize('tool', ['pdf', 'merge'])
+def test_tamil_pdf_preserves_rendering_text_and_fonts(tool):
+    font = next((path for path in [Path('C:/Windows/Fonts/Nirmala.ttc'),
+                Path('/usr/share/fonts/truetype/noto/NotoSansTamil-Regular.ttf')]
+                 if path.exists()), None)
+    if font is None:
+        pytest.skip('Tamil fixture requires Nirmala or Noto Sans Tamil')
+    with fitz.open() as doc:
+        page = doc.new_page()
+        page.insert_font(fontname='tamil', fontfile=str(font))
+        page.insert_text((40, 100), 'தமிழ் அறிக்கை हिन्दी', fontname='tamil', fontsize=22)
+        original = doc.tobytes()
+    with fitz.open(stream=original, filetype='pdf') as before:
+        expected_text = before[0].get_text()
+        assert 'தமிழ்' in expected_text
+        expected_pixels = before[0].get_pixmap().samples
+        font_bytes = [before.extract_font(f[0])[3] for f in before[0].get_fonts()]
+    inputs = [('தமிழ்.pdf', original)]
+    if tool == 'merge':
+        inputs.append(('second.pdf', sample_pdf()))
+    result = send(tool, inputs)
+    assert result.status_code == 200, result.text
+    if tool == 'pdf':
+        assert len(result.content) < len(original)
+    with fitz.open(stream=result.content, filetype='pdf') as after:
+        assert after[0].get_text() == expected_text
+        assert after[0].get_pixmap().samples == expected_pixels
+        assert [after.extract_font(f[0])[3] for f in after[0].get_fonts()] == font_bytes
 
 
 def test_size_limit(monkeypatch):
