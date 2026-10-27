@@ -71,8 +71,9 @@ let selectedFiles = [];
 let lang = 'en';
 let request = null;
 let resultUrl = null;
-let maxBytes = 24_000_000;
+let maxBytes = 4_000_000;
 let maxFiles = 12;
+let maxOutputMb = 0;
 
 function fmt(bytes){
   if(bytes < 1024) return `${bytes} B`;
@@ -152,6 +153,7 @@ function chooseMode(next, retainFiles=false){
   els.formatSetting.hidden=mode!=='image';els.widthSetting.hidden=mode!=='image';
   els.bitrateSetting.hidden=mode!=='mp3';
   $('upload-limit').textContent=lang==='ta' ? `மொத்தம் ${Math.floor(maxBytes/1_000_000)} MB வரை · ${maxFiles} ஃபைல்கள்` : `Up to ${Math.floor(maxBytes/1_000_000)} MB total · ${maxFiles} files at once`;
+  if(maxOutputMb)$('upload-limit').textContent+=lang==='ta' ? ` · பதிவிறக்கம் ${maxOutputMb} MB வரை` : ` · Downloads up to ${maxOutputMb} MB`;
   redrawFiles();
 }
 function switchLanguage(){
@@ -252,6 +254,6 @@ $('language-toggle').addEventListener('click',switchLanguage);
 window.addEventListener('beforeunload',()=>{if(resultUrl)URL.revokeObjectURL(resultUrl);});
 
 fetch('/api/limits').then(r=>r.ok?r.json():Promise.reject()).then(limits=>{
-  maxBytes=limits.max_total_mb*1_000_000;maxFiles=limits.max_files;chooseMode(mode);
+  maxBytes=limits.max_total_mb*1_000_000;maxFiles=limits.max_files;maxOutputMb=limits.max_output_mb||0;chooseMode(mode);
 }).catch(()=>{});
 chooseMode(mode);

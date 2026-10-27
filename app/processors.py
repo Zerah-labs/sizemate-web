@@ -21,6 +21,16 @@ class ProcessingError(Exception):
     """Safe processing failure to show in user interface."""
 
 
+def ffmpeg_executable() -> str:
+    installed = shutil.which('ffmpeg')
+    if installed:
+        return installed
+    # Serverless hosts cannot install OS packages at runtime. This package
+    # includes a platform-specific FFmpeg binary in the deployment bundle.
+    import imageio_ffmpeg
+    return imageio_ffmpeg.get_ffmpeg_exe()
+
+
 def safe_stem(filename: str) -> str:
     """Make a benign output filename, never an input path."""
     name = Path(filename.replace('\\', '/').split('/')[-1]).stem
@@ -120,7 +130,7 @@ def optimize_pdf(source: Path, dest: Path, preset: str) -> None:
 
 
 def mp4_to_mp3(source: Path, dest: Path, bitrate: str = '192') -> None:
-    command(['ffmpeg', '-nostdin', '-hide_banner', '-loglevel', 'error', '-y',
+    command([ffmpeg_executable(), '-nostdin', '-hide_banner', '-loglevel', 'error', '-y',
              '-i', str(source), '-map', '0:a:0', '-vn', '-c:a', 'libmp3lame',
              '-b:a', f'{bitrate}k', str(dest)], timeout=210)
     if not dest.exists() or dest.stat().st_size == 0:
@@ -129,7 +139,7 @@ def mp4_to_mp3(source: Path, dest: Path, bitrate: str = '192') -> None:
 
 def compress_video(source: Path, dest: Path, preset: str) -> None:
     crf = {'small': '32', 'balanced': '28', 'quality': '23'}[preset]
-    command(['ffmpeg', '-nostdin', '-hide_banner', '-loglevel', 'error', '-y',
+    command([ffmpeg_executable(), '-nostdin', '-hide_banner', '-loglevel', 'error', '-y',
              '-i', str(source), '-map', '0:v:0', '-map', '0:a?',
              '-c:v', 'libx264', '-preset', 'veryfast', '-crf', crf,
              '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '128k',

@@ -18,11 +18,15 @@ from starlette.background import BackgroundTask
 from .processors import (
     IMAGE_EXTS, PDF_EXTS, VIDEO_EXTS, ProcessingError, UploadEntry,
     compress_video, images_to_pdf, make_zip, merge_pdfs, mp4_to_mp3,
-    optimize_image, optimize_pdf, output_ext_for_image, safe_stem,
+    optimize_image, optimize_pdf, output_ext_for_image, safe_stem, ffmpeg_executable,
 )
 
 ROOT = Path(__file__).resolve().parent
+VERCEL_HOSTED = bool(os.environ.get('VERCEL'))
 MAX_UPLOAD_BYTES = int(os.environ.get('MAX_UPLOAD_MB', '24')) * 1_000_000
+MAX_OUTPUT_BYTES = 4_000_000 if VERCEL_HOSTED else 0
+if VERCEL_HOSTED:
+    MAX_UPLOAD_BYTES = min(MAX_UPLOAD_BYTES, 4_000_000)
 MAX_FILES = 12
 # Free Render instances have limited RAM; cap simultaneous FFmpeg/Ghostscript work.
 CONVERSION_SLOTS = threading.BoundedSemaphore(value=max(1, min(4, int(os.environ.get('MAX_CONCURRENT_JOBS', '1')))))
@@ -60,13 +64,14 @@ def home():
 
 @app.get('/health')
 def health():
-    return {'status': 'ok', 'ffmpeg': bool(shutil.which('ffmpeg')),
+    return {'status': 'ok', 'ffmpeg': bool(ffmpeg_executable()),
             'ghostscript': bool(shutil.which('gs'))}
 
 
 @app.get('/api/limits')
 def limits():
     return {'max_total_mb': MAX_UPLOAD_BYTES // 1_000_000, 'max_files': MAX_FILES,
+            'max_output_mb': MAX_OUTPUT_BYTES // 1_000_000,
             'supported_tools': ['image', 'pdf', 'mp3', 'video', 'merge', 'photos-pdf']}
 
 
@@ -198,6 +203,8 @@ def process(
         if not finished.is_file() or not finished.stat().st_size:
             raise HTTPException(422, 'No output could be created from this file.')
         size = finished.stat().st_size
+        if MAX_OUTPUT_BYTES and size > MAX_OUTPUT_BYTES:
+            raise HTTPException(413, 'The converted file exceeds this hosted demo\'s 4 MB download limit. Try fewer files, smaller dimensions, or a lower quality setting.')
         response = FileResponse(
             finished, media_type='application/octet-stream', filename=finished.name,
             background=BackgroundTask(shutil.rmtree, workspace, ignore_errors=True),

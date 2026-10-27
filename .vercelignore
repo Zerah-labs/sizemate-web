@@ -1,0 +1,8 @@
+.venv/
+.test-artifacts/
+.pytest_cache/
+__pycache__/
+tests/
+*.zip
+.env*
+.git/

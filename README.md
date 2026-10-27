@@ -138,3 +138,11 @@ Install development dependencies with `python -m pip install -r requirements-dev
 Run `python -m pytest -q tests --basetemp=.test-artifacts` to check all six conversion tools, multilingual filenames and PDFs, and browser layouts at 320, 390, 768 and 1366 pixels in English and Tamil. Browser checks cover keyboard file selection, image conversion and download, file ordering, removal, clearing, validation, and mobile touch targets. These emulate screen sizes; they do not replace testing on physical iOS and Android devices.
 
 To use installed Chrome instead of the downloaded Chromium, set `SIZEMATE_BROWSER_CHANNEL=chrome`. Screenshots are saved under `.test-artifacts/`. GitHub Actions runs the same suite on pushes and pull requests and uploads screenshots.
+
+## Vercel deployment
+
+Vercel detects `app/main.py` as a FastAPI application. `vercel.json` configures the function duration and excludes tests, local environments and the original ZIP. FFmpeg is available through the bundled `imageio-ffmpeg` package when the host has no system FFmpeg.
+
+The Vercel demo allows **4 MB total uploads and 4 MB downloads** because Vercel Functions enforce a 4.5 MB payload limit. The interface reads and displays the hosted limits. Local and Docker deployments keep the 24 MB upload default. Files exceeding the hosted output limit return a clear message. Supporting larger files on Vercel requires direct object-storage uploads and downloads.
+
+Connect the Vercel project to `Zerah-labs/sizemate-web`, production branch `main`, to enable automatic deployments from GitHub. Deployment credentials stay outside the repository.

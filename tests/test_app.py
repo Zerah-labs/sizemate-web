@@ -66,7 +66,7 @@ def test_site_and_health():
     assert client.get('/api/limits').json()['max_files']==12
     health=client.get('/health').json()
     assert health['status'] == 'ok'
-    assert health['ffmpeg'] == bool(shutil.which('ffmpeg'))
+    assert health['ffmpeg']
 
 
 def test_compress_jpeg():
@@ -199,3 +199,19 @@ def test_size_limit(monkeypatch):
     monkeypatch.setattr(main,'MAX_UPLOAD_BYTES',10)
     result=send('image',[('large.png',picture('PNG'))])
     assert result.status_code==413
+
+
+def test_hosted_output_limit(monkeypatch):
+    import app.main as main
+    monkeypatch.setattr(main, 'MAX_OUTPUT_BYTES', 10)
+    result = send('image', [('photo.jpg', picture())])
+    assert result.status_code == 413
+    assert 'download limit' in result.json()['detail']
+
+
+def test_bundled_ffmpeg_fallback(monkeypatch):
+    from app.processors import ffmpeg_executable
+    monkeypatch.setattr(shutil, 'which', lambda name: None)
+    executable = ffmpeg_executable()
+    assert Path(executable).is_file()
+    assert subprocess.run([executable, '-version'], capture_output=True).returncode == 0
